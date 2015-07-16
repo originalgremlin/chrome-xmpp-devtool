@@ -1,3 +1,5 @@
+"use strict";
+
 var onCreate = function (panel) {
   // no-op
 };

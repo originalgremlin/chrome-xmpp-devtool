@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sass --compass --watch --scss --cache-location var/cache/sass src/styles:build/styles
+node_modules/.bin/jsx --watch --harmony -x jsx --cache-dir var/cache/jsx src/scripts build/scripts
+node_modules/.bin/watchify build/scripts/panel.js -o build/bundle.js
