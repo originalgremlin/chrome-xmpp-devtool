@@ -11,6 +11,12 @@
     "64": "assets/icons/64x64.png",
     "128": "assets/icons/128x128.png"
   },
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "scripts/bundle.js"
+    ]
+  },
   "devtools_page": "devtools.html",
   "permissions": [
     "activeTab",

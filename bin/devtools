@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-sass --compass --watch --scss --cache-location var/cache/sass src/styles:build/styles
-node_modules/.bin/jsx --watch --harmony -x jsx --cache-dir var/cache/jsx src/scripts build/scripts
-node_modules/.bin/watchify build/scripts/panel.js -o build/bundle.js
+sass --compass --watch --scss --cache-location var/cache/sass src/styles:build/styles >var/log/sass.out 2>var/log/sass.err &
+node_modules/.bin/jsx --watch --harmony -x jsx --cache-dir var/cache/jsx src/scripts build/scripts >var/log/jsx.out 2>var/log/jsx.err &
+node_modules/.bin/watchify build/scripts/panel.js -o build/scripts/bundle.js >var/log/watchify.out 2>var/log/watchify.err &
