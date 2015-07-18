@@ -1,9 +1,9 @@
 "use strict";
 
 var utils = {
-    log: function(obj) {
+    log: function() {
         if(chrome && chrome.runtime) {
-            chrome.runtime.sendMessage({ type: "log", obj: obj });
+            chrome.runtime.sendMessage({ type: "log", obj: arguments });
         }
     }
 };

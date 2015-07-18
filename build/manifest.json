@@ -14,7 +14,7 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "scripts/bundle.js"
+      "scripts/background.js"
     ]
   },
   "devtools_page": "devtools.html",
