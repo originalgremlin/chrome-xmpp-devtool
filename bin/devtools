@@ -8,6 +8,10 @@ LOG=${BASE}/var/log
 RUN=${BASE}/var/run
 SRC=${BASE}/src
 
+COLOR_RED=`tput setaf 1`
+COLOR_GREEN=`tput setaf 2`
+COLOR_NONE=`tput sgr0`
+
 stop () {
     for arg in $@
     do
@@ -18,6 +22,18 @@ stop () {
             kill `cat ${pid_file}`
             rm -f ${pid_file}
             echo "done!"
+        fi
+    done
+}
+
+status () {
+    for arg in $@
+    do
+        if is_started ${arg}
+        then
+            echo "${COLOR_GREEN}${arg} is running.${COLOR_NONE}"
+        else
+            echo "${COLOR_RED}${arg} is stopped.${COLOR_NONE}"
         fi
     done
 }
@@ -60,16 +76,35 @@ case "$1" in
         ;;
 
     stop)
-        stop sass jsx watchify
+        if [ "$#" -ne 1 ]
+        then
+            stop "${*:2}"
+        else
+            stop sass jsx watchify
+        fi
+        ;;
+
+    status)
+        if [ "$#" -ne 1 ]
+        then
+            status "${*:2}"
+        else
+            status sass jsx watchify
+        fi
         ;;
 
     restart)
-        $0 stop
+        if [ "$#" -ne 1 ]
+        then
+            $0 stop "${*:2}"
+        else
+            $0 stop
+        fi
         $0 start
         ;;
 
     *)
-        echo "Usage: $0 start|stop|restart"
+        echo "Usage: $0 start|stop|status|restart [sass] [jsx] [watchify]"
         exit 1
         ;;
 esac

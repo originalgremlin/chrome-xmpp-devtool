@@ -5,8 +5,5 @@ var React = require('react'),
     utils = require('./utils');
 
 window.addEventListener('load', function () {
-    utils.log('loaded', arguments);
-    utils.log('loaded', Panel);
-    utils.log('loaded', document);
-    React.render(<Panel />, document.body);
+    React.render(<Panel />, document.getElementById('panel'));
 }, false)

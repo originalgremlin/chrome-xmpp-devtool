@@ -3,7 +3,7 @@
 var Constants = require('../constants'),
     Dispatcher = require('flux').Dispatcher,
     EventEmitter = require('events').EventEmitter,
-    md5 = require('md5'),
+    uuid = require('uuid'),
     _ = require('lodash');
 
 var data = {};
@@ -37,7 +37,7 @@ Dispatcher.register(function (action) {
         case Constants.Actions.INJECT_STANZA:
             var body = action.stanza,
                 date = new Date(),
-                id = md5(body);
+                id = uuid.v4();
             data[id] = {
                 body: body,
                 date: date,

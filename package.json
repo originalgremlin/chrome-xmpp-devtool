@@ -9,8 +9,8 @@
   "dependencies": {
     "flux": "^2.0.3",
     "lodash": "^3.10.0",
-    "md5": "^2.0.0",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "react-tools": "^0.13.3",
