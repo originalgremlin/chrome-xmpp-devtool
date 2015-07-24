@@ -1,7 +1,7 @@
 "use strict";
 
 var Constants = require('../constants'),
-    Dispatcher = require('flux').Dispatcher,
+    Dispatcher = require('../dispatcher'),
     EventEmitter = require('events').EventEmitter,
     uuid = require('uuid'),
     _ = require('lodash');

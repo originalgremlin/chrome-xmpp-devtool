@@ -1,6 +1,8 @@
 "use strict";
 
 var React = require('React'),
+    Injector = require('./injector'),
+    Stanzas = require('./stanzas'),
     _ = require('lodash');
 
 var Panel = React.createClass({

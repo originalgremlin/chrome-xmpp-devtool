@@ -11,16 +11,6 @@
     "64": "assets/icons/64x64.png",
     "128": "assets/icons/128x128.png"
   },
-  "background": {
-    "scripts": ["scripts/background.js"]
-  },
-  "content_scripts": [{
-    "all_frames": true,
-    "js": ["scripts/content.js"],
-    "matches": ["<all_urls>"],
-    "run_at": "document_end"
-  }],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "devtools_page": "devtools.html",
   "permissions": ["<all_urls>"]
 }

@@ -11,15 +11,14 @@ var Injector = React.createClass({
         };
     },
 
-    componentDidMount: function () {
-        this.focus();
-    },
-
     render: function () {
         return (
-            <form className="injector" onSubmit={ this.handleSubmit }>
-                <textarea ref="textarea" onChange={ this.handleChange } value={ this.state.stanza }></textarea>
-            </form>
+            <textarea
+                className="injector"
+                onChange={ this.handleChange }
+                onKeyPress={ this.handleKeyPress }
+                value={ this.state.stanza }
+            />
         );
     },
 
@@ -29,17 +28,14 @@ var Injector = React.createClass({
         });
     },
 
-    handleSubmit: function (evt) {
-        evt.preventDefault();
-        if (this.validate(this.state.stanza)) {
-            StanzaActions.inject(this.state.stanza);
-        } else {
-            // TODO: error message to user
+    handleKeyPress: function (evt) {
+        var isShiftEnter = evt.shiftKey && (evt.charCode === 13),
+            isValid = this.validate(this.state.stanza);
+        if (isShiftEnter && isValid) {
+            evt.preventDefault();
+            StanzaActions.send(this.state.stanza);
+            this.setState({ stanza: '' });
         }
-    },
-
-    focus: function () {
-        React.findDOMNode(this.refs.textarea).focus();
     },
 
     validate: function (stanza) {

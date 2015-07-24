@@ -7,7 +7,9 @@ var React = require('React'),
 
 var Stanzas = React.createClass({
     getInitialState: function () {
-        stanzas: StanzaStore.getStanzas()
+        return {
+            stanzas: StanzaStore.getStanzas()
+        };
     },
 
     componentDidMount: function() {

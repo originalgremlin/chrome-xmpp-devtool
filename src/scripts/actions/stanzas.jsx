@@ -1,10 +1,10 @@
 "use strict";
 
 var Constants = require('../constants'),
-    Dispatcher = require('flux').Dispatcher;
+    Dispatcher = require('../dispatcher');
 
 var Stanzas = {
-    inject: function (stanza) {
+    send: function (stanza) {
         Dispatcher.dispatch({
             type: Constants.Actions.INJECT_STANZA,
             stanza: stanza
