@@ -1,0 +1,19 @@
+{
+  "name": "chrome-xmpp-devtool",
+  "version": "1.0.0",
+  "description": "This extension allows watching and injecting xmpp stanzas in real time.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:originalgremlin/chrome-xmpp-devtool.git"
+  },
+  "dependencies": {
+    "flux": "^2.0.3",
+    "lodash": "^3.10.0",
+    "react": "^0.13.3",
+    "uuid": "^2.0.1"
+  },
+  "devDependencies": {
+    "react-tools": "^0.13.3",
+    "watchify": "^3.2.3"
+  }
+}

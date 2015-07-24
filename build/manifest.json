@@ -12,8 +12,5 @@
     "128": "assets/icons/128x128.png"
   },
   "devtools_page": "devtools.html",
-  "permissions": [
-    "activeTab",
-    "<all_urls>"
-  ]
+  "permissions": ["<all_urls>"]
 }

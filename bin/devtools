@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+BASE=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
+BIN=${BASE}/node_modules/.bin
+BUILD=${BASE}/build
+CACHE=${BASE}/var/cache
+LOG=${BASE}/var/log
+RUN=${BASE}/var/run
+SRC=${BASE}/src
+
+COLOR_RED=`tput setaf 1`
+COLOR_GREEN=`tput setaf 2`
+COLOR_NONE=`tput sgr0`
+
+stop () {
+    for arg in $@
+    do
+        pid_file=${RUN}/${arg}.pid
+        if [ -f ${pid_file} ]
+        then
+            echo -n "Stopping ${arg}..."
+            kill `cat ${pid_file}`
+            rm -f ${pid_file}
+            echo "done!"
+        fi
+    done
+}
+
+status () {
+    for arg in $@
+    do
+        if is_started ${arg}
+        then
+            echo "${COLOR_GREEN}${arg} is running.${COLOR_NONE}"
+        else
+            echo "${COLOR_RED}${arg} is stopped.${COLOR_NONE}"
+        fi
+    done
+}
+
+is_started () {
+    pid_file=${RUN}/${1}.pid
+    if [ -f ${pid_file} ]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+case "$1" in
+    start)
+        if ! is_started "sass"
+        then
+            echo -n "Starting sass..."
+            sass --compass --watch --scss --cache-location ${CACHE}/sass ${SRC}/styles:${BUILD}/styles >${LOG}/sass.out 2>${LOG}/sass.err &
+            echo $! >${RUN}/sass.pid
+            echo "done!"
+        fi
+
+        if ! is_started "jsx"
+        then
+            echo -n "Starting jsx..."
+            ${BIN}/jsx --watch --harmony -x jsx --cache-dir ${CACHE}/jsx ${SRC}/scripts ${BUILD}/scripts >${LOG}/jsx.out 2>${LOG}/jsx.err &
+            echo $! >${RUN}/jsx.pid
+            echo "done!"
+        fi
+
+        if ! is_started "watchify"
+        then
+            echo -n "Starting watchify..."
+            ${BIN}/watchify ${BUILD}/scripts/app.js -o ${BUILD}/scripts/bundle.js >${LOG}/watchify.out 2>${LOG}/watchify.err &
+            echo $! >${RUN}/watchify.pid
+            echo "done!"
+        fi
+        ;;
+
+    stop)
+        if [ "$#" -ne 1 ]
+        then
+            stop "${*:2}"
+        else
+            stop sass jsx watchify
+        fi
+        ;;
+
+    status)
+        if [ "$#" -ne 1 ]
+        then
+            status "${*:2}"
+        else
+            status sass jsx watchify
+        fi
+        ;;
+
+    restart)
+        if [ "$#" -ne 1 ]
+        then
+            $0 stop "${*:2}"
+        else
+            $0 stop
+        fi
+        $0 start
+        ;;
+
+    *)
+        echo "Usage: $0 start|stop|status|restart [sass] [jsx] [watchify]"
+        exit 1
+        ;;
+esac
+exit 0
+
+

@@ -1,1 +1,5 @@
 .idea
+build/scripts
+build/styles
+node_modules
+var
