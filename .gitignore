@@ -1,5 +1,6 @@
 .idea
 build/scripts
 build/styles
+dist
 node_modules
 var

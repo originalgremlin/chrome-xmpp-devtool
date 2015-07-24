@@ -4,6 +4,7 @@ BASE=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
 BIN=${BASE}/node_modules/.bin
 BUILD=${BASE}/build
 CACHE=${BASE}/var/cache
+DIST=${BASE}/dist
 LOG=${BASE}/var/log
 RUN=${BASE}/var/run
 SRC=${BASE}/src
@@ -101,6 +102,16 @@ case "$1" in
             $0 stop
         fi
         $0 start
+        ;;
+
+    package)
+        rm -rf ${DIST}
+        mkdir -p ${DIST} ${DIST}/scripts ${DIST}/styles
+        cp ${BUILD}/devtools.html ${BUILD}/panel.html ${BUILD}/manifest.json ${DIST}
+        cp ${BUILD}/scripts/bundle.js ${BUILD}/scripts/devtools.js ${DIST}/scripts
+        cp ${BUILD}/styles/bundle.css ${DIST}/styles
+        cp -r ${BUILD}/assets ${DIST}
+        ${BIN}/crx pack ${DIST} -o ${DIST}/chrome-xmpp-devtool.crx >${LOG}/package.out 2>${LOG}/package.err
         ;;
 
     *)
